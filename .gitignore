@@ -1,0 +1,41 @@
+### Django ###
+*.log
+*.pot
+*.pyc
+__pycache__/
+local_settings.py
+media
+# Environments
+.env
+.venv
+ENV/
+env.bak/
+venv.bak/
+env/
+env/bin
+env/include
+env/lib
+venv/
+venv/bin
+venv/include
+venv/lib
+
+# PyCharm files #
+.idea/**/workspace.xml
+.idea/**/tasks.xml
+.idea/dictionaries
+.idea/**/dataSources/
+.idea/**/dataSources.ids
+.idea/**/dataSources.xml
+.idea/**/dataSources.local.xml
+.idea/**/sqlDataSources.xml
+.idea/**/dynamic.xml
+.idea/**/uiDesigner.xml
+.idea/**/gradle.xml
+.idea/**/libraries
+.idea/
+*.iws /out/
+# Sqlite Db
+db.sqlite3
+
+.DS_Store
