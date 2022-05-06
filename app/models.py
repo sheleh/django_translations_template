@@ -35,7 +35,7 @@ class UserManager(BaseUserManager):
 class User(AbstractUser):
     username = None
     email = models.EmailField(unique=True)
-    language = models.CharField(max_length=20, blank=True, verbose_name=_('language'))
+    language = models.CharField(max_length=2, blank=True, verbose_name=_('language'))
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []

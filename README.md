@@ -24,8 +24,8 @@ Project documentation:
 
 List any major frameworks/libraries used to bootstrap project.
 
-* [Docker](https://docs.docker.com/engine/install/)
-* [Docker-compose](https://docs.docker.com/compose/install/)
+* [Docker](https://docs.docker.com/compose/gettingstarted/)
+* [Docker-compose](https://docs.docker.com/compose/gettingstarted/)
 * [Django](https://www.djangoproject.com/start/)
 * [Django Rest Framework](https://www.django-rest-framework.org/)
 
@@ -42,9 +42,9 @@ To get a local copy up and running follow these simple example steps.
 ### Prerequisites
 
 You should install following software first:
-* Git
-* Docker
-* Docker-compose
+* [Git](https://github.com/git-guides/install-git)
+* [Docker](https://docs.docker.com/engine/install/)
+* [Docker-compose](https://docs.docker.com/compose/install/)
 
 ### Installation
 
