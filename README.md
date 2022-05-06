@@ -17,7 +17,7 @@ Also implemented asynchronous sending Email messages at registration , change an
 
 
 Project documentation:
-* [Api Endpoints (Postman collection)](docs/Google_auth_OTP_django_postman_collection.json)
+* [Api Endpoints (Postman collection)](docs/django_translations.json)
 
 
 ### Built With
@@ -66,7 +66,7 @@ You should install following software first:
    ```
 5.Clone the repo
    ```sh
-   git clone 
+   git clone git@github.com:sheleh/django_translations_template.git
    ```
 6.Make first application build via docker-compose
    ```sh
