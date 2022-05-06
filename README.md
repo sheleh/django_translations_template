@@ -4,7 +4,7 @@
 <br />
 <div align="center">
 
-  <h2 align="center">REPOSITORY: Registration, login/logout/update/reset password with English German French localization</h2>
+  <h2 align="center">REPOSITORY: Registration, login/logout/update/reset password with English, German, French localization</h2>
 
 </div>
 
@@ -66,7 +66,7 @@ You should install following software first:
    ```
 5.Clone the repo
    ```sh
-   git clone git@gitlab.mobidev.biz:Python/templates/registration-by-google-authenticator.git .
+   git clone 
    ```
 6.Make first application build via docker-compose
    ```sh
@@ -153,5 +153,5 @@ _and:_
 [Full details are provided on Django's official website](https://docs.djangoproject.com/en/4.0/topics/i18n/translation/)
 
 
-#### [Project Source](https://gitlab.mobidev.biz/Python/templates/registration-by-google-authenticator.git)
+#### [Project Source]( https://github.com/sheleh/django_translations_template.git)
 #### [License dependencies](LICENSE-DEPENDENCIES.md)
