@@ -87,6 +87,26 @@ class UserAuthTestCase(APITestCase):
                          [ErrorDetail(string='This field may not be blank.', code='blank')])
         self.assertEqual(set(response.data.keys()), expected_errors_keys)
 
+    def test_password_is_incorrect(self):
+        self.request_data['password'] = 'incorrect_password'
+        expected_errors_keys = {'error'}
+
+        response = self.client.post(self.url, self.request_data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(response.data['error'],
+                         ErrorDetail(string='Email or password is incorrect.', code='invalid'))
+        self.assertEqual(set(response.data.keys()), expected_errors_keys)
+
+    def test_email_is_incorrect(self):
+        self.request_data['email'] = 'mr_shadow@test.com'
+        expected_errors_keys = {'error'}
+
+        response = self.client.post(self.url, self.request_data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(response.data['error'],
+                         [ErrorDetail(string='User with provided email does not exists.', code='invalid')])
+        self.assertEqual(set(response.data.keys()), expected_errors_keys)
+
     def test_user_auth_successful(self):
         expected_success_keys = {'success', 'access_token'}
 

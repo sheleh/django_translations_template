@@ -52,21 +52,21 @@ You should install following software first:
    ```sh
    cd /home/user/project/
    ```
-2.Initialize existing project directory python3
+2.Clone the repo
+   ```sh
+   git clone https://github.com:sheleh/django_translations_template.git .
+   ```
+3.Initialize existing project directory python3
    ```sh
    git init
    ```
-3.Create an environment called venv
+4.Create an environment called venv
    ```sh
    python3 -m venv ./venv
    ```
-4.Activate virtual environment
+5.Activate virtual environment
    ```sh
    source venv/bin/activate
-   ```
-5.Clone the repo
-   ```sh
-   git clone git@github.com:sheleh/django_translations_template.git
    ```
 6.Make first application build via docker-compose
    ```sh

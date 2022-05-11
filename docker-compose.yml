@@ -1,24 +1,41 @@
-version: '3'
+version: '3.8'
 
 services:
   backend:
+    container_name: backend
     build: .
-    command: python3 manage.py runserver 0.0.0.0:8000
+    command: sh -c "python3 manage.py migrate && python3 manage.py runserver 0.0.0.0:8000"
     volumes:
       - ./:/code
-#      - ./locale:/code/locale
     ports:
       - "8000:8000"
     depends_on:
       - redis
+
   redis:
+    container_name: redis_db
     image: redis:alpine
-  celery:
+
+  celery_main:
+    container_name: celery_main
     build: .
     command: celery -A translation_template worker --loglevel=info
     volumes:
       - ./:/code
     depends_on:
       - redis
-      - backend
 
+  flower:
+    container_name: flower
+    build: .
+    command: sh "/code/start_flower.sh"
+    volumes:
+      - ./:/code
+    env_file:
+      - .env
+    ports:
+      - 5555:5555
+    restart: on-failure
+    depends_on:
+      - celery_main
+      - redis

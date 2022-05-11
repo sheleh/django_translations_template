@@ -3,7 +3,6 @@ from django.utils.translation import gettext_lazy as _
 from rest_framework import status, permissions
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework.authtoken.models import Token
 from rest_framework.generics import CreateAPIView
 from app.api.serializers import (
     UserSerializer,
@@ -31,8 +30,7 @@ class UserAuthenticationAPIView(APIView):
     def post(self, request):
         serializer = self.serializer_class(data=request.data)
         serializer.is_valid(raise_exception=True)
-        token, created = Token.objects.get_or_create(user=serializer.validated_data.get('user'))
-        user = serializer.validated_data.get('user')
+        user, token = serializer.save()
         response = Response()
         response.data = {"success": _("You have successfully logged in !"), "access_token": token.key}
         response.status_code = status.HTTP_200_OK

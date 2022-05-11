@@ -6,7 +6,8 @@ from django.utils.translation import gettext_lazy as _
 from rest_framework.serializers import ModelSerializer
 from rest_framework.fields import CharField, EmailField, ChoiceField
 from rest_framework.validators import UniqueValidator
-from rest_framework.exceptions import ValidationError, PermissionDenied
+from rest_framework.exceptions import ValidationError
+from rest_framework.authtoken.models import Token
 from app.api.utils.tasks import send_signup_mail, send_password_update_mail, send_language_update_mail
 from app.models import User
 
@@ -29,7 +30,7 @@ class UserSerializer(ModelSerializer):
         user = User.objects.create_user(**validated_data)
         user.set_password(validated_data.get('password'))
         user.save()
-        send_signup_mail.delay(recipient=validated_data.get('email'), language=validated_data.get('language'))
+        send_signup_mail.delay(recipient=validated_data['email'], language=validated_data['language'])
         translation.activate(user.language)
         return user
 
@@ -43,13 +44,18 @@ class UserAuthSerializer(ModelSerializer):
         fields = ['email', 'password']
 
     def validate(self, attrs):
-        user = authenticate(email=attrs.get('email'), password=attrs.get('password'))
-        if not user:
-            raise PermissionDenied({'error': 'Email or password is incorrect'})
-        translation.activate(user.language)
-        attrs['user'] = user
-
+        email = User.objects.filter(email=attrs.get('email')).first()
+        if not email:
+            raise ValidationError({'error': _('User with provided email does not exists.')})
         return attrs
+
+    def create(self, validated_data):
+        user = authenticate(email=validated_data['email'], password=validated_data['password'])
+        if not user:
+            raise ValidationError({'error': _('Email or password is incorrect.')})
+        token, created = Token.objects.get_or_create(user=user)
+        translation.activate(user.language)
+        return user, token
 
 
 class UserChangePasswordSerializer(ModelSerializer):
@@ -72,7 +78,7 @@ class UserChangePasswordSerializer(ModelSerializer):
         return attrs
 
     def update(self, instance, validated_data):
-        update_data = {'password': make_password(validated_data.get('new_password'))}
+        update_data = {'password': make_password(validated_data['new_password'])}
         send_password_update_mail.delay(recipient=instance.email, language=instance.language)
         return super(UserChangePasswordSerializer, self).update(instance, update_data)
 
@@ -91,7 +97,7 @@ class UserSwitchLanguageSerializer(ModelSerializer):
         return attrs
 
     def update(self, instance, validated_data):
-        setattr(instance, "language", self.validated_data.get('language'))
+        setattr(instance, "language", self.validated_data['language'])
         instance.save()
         translation.activate(instance.language)
         send_language_update_mail.delay(recipient=instance.email, language=instance.language)
